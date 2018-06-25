@@ -1,0 +1,78 @@
+<!doctype html>
+
+<head>
+    <title>Animation</title>
+</head>
+
+
+<canvas id="gameCanvas" width="600" height="320"></canvas>
+
+<style>
+    #gameCanvas {
+        background-image: url(images/bg.jpg);
+        background-size: 100%;
+    }
+
+
+</style>
+
+
+<script>
+    var canvas,
+        canvasContext;
+
+    var player;
+
+    var pXspeed = 1;
+    var pYspeed = 0;
+    var pXpos = 100;
+    var pYpos = 100;
+
+    window.onload = function() {
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+        setInterval(mainLoop, 1000 / 60);
+
+        player = new sprite('images/player.png',  0,0, 35,45, 30,40, pXpos, pXpos,pXspeed,pYspeed); // initializses new object directly linked to a class constuctor
+
+    }
+
+    function mainLoop() {
+        canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+        player.render('images/player.png', 0,0, 50,50, 40,40); // using the player object then using the function from the class that is linked to the object
+        player.move();
+    }
+
+    class sprite {
+        constructor(img, xDraw,yDraw, drawWidth,drawHeight, width,height, x,y, xSpeed,ySpeed,) {
+            this.sprite = new Image();
+            this.sprite.src = img;
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.xSpeed = xSpeed;
+            this.ySpeed = ySpeed;
+            this.xDraw = xDraw;
+            this.yDraw = yDraw;
+            this.drawWidth = drawWidth;
+            this.drawHeight = drawHeight;
+            
+//            this.PreviousX;
+//            this.PreviousY;
+//            this.VelocityX;
+//            this.VelocityY;
+        }
+        render() {
+            canvasContext.drawImage(this.sprite, this.xDraw,this.yDraw, this.drawWidth,this.drawHeight, this.x, this.y, this.width, this.height);
+        }
+
+        move() {
+            if(this.x < canvas.width){
+                this.x = this.x + this.xSpeed;   
+            }
+            
+        }
+    }
+
+</script>
